@@ -2,7 +2,7 @@
 VPATH = ./src 
 
 	# compiler include search paths
-INCS = -I./include \
+INCS = -I../PackEngine/src \
 	-I../windex/include \
 	-I../raven-set \
 
@@ -30,10 +30,11 @@ $(ODIR)/%.o: %.cpp
 
 starter: $(OBJ_starter)
 	g++ $(OPT) \
-	-o bin/starter.exe $^  \
+	-o bin/pack3D.exe $^  \
 	$(static_link_flags) $(LIBS)
 
 .PHONY: clean
 clean:
 	del /q .vscode\\obj\\*.o
 
+rebuild : clean starter
