@@ -15,11 +15,10 @@ raven::pack::cEngine theEngine;
 
 std::vector<box_t> theBoxes;
 
-void gen1()
+void gen1( int count )
 {
-    int count = 2;
-    int max = 10;
-    int min = 1;
+    int max = 100;
+    int min = 10;
 
     srand(77);
     theBoxes.clear();
@@ -34,32 +33,30 @@ void gen1()
     }
 }
 
-class cGUI : public cStarterGUI
+void cGUI::draw(wex::shapes &S)
 {
-public:
-    cGUI()
-        : cStarterGUI(
-              "Starter",
-              {50, 50, 1000, 500}),
-          lb(wex::maker::make<wex::label>(fm))
+    double Z = 0;
+    double scale = 10;
+    for (auto &box : theEngine.getPack())
     {
-        lb.move(50, 50, 100, 30);
-        lb.text("Hello World");
-
-        show();
-        run();
+        if (box.loc.z <= Z && box.loc.z + box.wlh.z >= Z)
+            S.rectangle(
+                cxy(
+                    scale * box.loc.x,
+                    scale * box.loc.y),
+                cxy(
+                    scale * (box.wlh.x),
+                    scale * (box.wlh.y)));
     }
-
-private:
-    wex::label &lb;
-};
+}
 
 main()
 {
-    theEngine.test();
-    gen1();
-    theEngine.setSize(100,100,100);
-    theEngine.pack( theBoxes[0] );
-    //cGUI theGUI;
+    //theEngine.test();
+    gen1(5);
+    theEngine.setSize(100, 100, 100);
+    for( auto& box : theBoxes)
+        theEngine.pack(box);
+    cGUI theGUI;
     return 0;
 }

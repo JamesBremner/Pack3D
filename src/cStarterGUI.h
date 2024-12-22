@@ -61,3 +61,20 @@ public:
 protected:
     wex::gui &fm;
 };
+
+class cGUI : public cStarterGUI
+{
+public:
+    cGUI()
+        : cStarterGUI(
+              "Starter",
+              {50, 50, 1000, 500})
+    {
+
+        show();
+        run();
+    }
+
+private:
+    void draw(wex::shapes &S);
+};
